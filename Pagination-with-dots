@@ -1,0 +1,49 @@
+$paged=10;
+$total=2000;
+$per_page_record=20;
+$total_pages = ceil($total / $per_page_record);     
+$NUMPERPAGE =$per_page_record;
+$num_results =$total;
+ <ul>
+            <?php 
+            if(!isset($_GET['ss']) || !$page = intval($_GET['ss'])) {
+                $page = 1;
+            }
+            $linkextra = [];
+            if(isset($_GET['var1']) && $var1 = $_GET['var1']) { 
+                $linkextra[] = "var1=" . urlencode($var1);
+            }
+            $linkextra = implode("&amp;", $linkextra);
+            if($linkextra) {
+                $linkextra .= "&amp;";
+            }
+            $tmp = [];
+            for($p=1, $i=0; $i < $num_results; $p++, $i += $NUMPERPAGE) {
+                if($page == $p) {
+      // current page shown as bold, no link
+                  $tmp[] = "<b>{$p}</b>";
+              } else {
+                $tmp[] = "<li><a href=\"{$this_page}?{$linkextra}ss={$p}\">{$p}</a></li>";
+              }
+          }
+          for($i = count($tmp) - 3; $i > 1; $i--) {
+            if(abs($page - $i - 1) > 2) {
+              unset($tmp[$i]);
+          }
+      }
+      if(count($tmp) > 1) {
+        if($page > 1) {
+        } else {
+        }
+        $lastlink = 0;
+        foreach($tmp as $i => $link) {
+          if($i > $lastlink + 1) {
+            echo " ... ";
+        } elseif($i) {
+        }
+        echo $link;
+        $lastlink = $i;
+    }
+}
+?>
+</ul>
